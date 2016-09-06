@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="MOHRPCServiceDefinitions" targetNamespace="http://www.mohh.com/nehr" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.mohh.com/nehr" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xs:schema xmlns:nehr="http://www.mohh.com/nehr" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.mohh.com/nehr" schemaLocation="putLabResult_Request.xsd"/>
+    </xs:schema>
+    <xs:schema xmlns:nehr="http://www.mohh.com/nehr" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.mohh.com/nehr" schemaLocation="putLabResult_Reply.xsd"/>
+    </xs:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="putLabResult">
+    <WL5G3N0:part element="WL5G3N1:putLabResult" name="inparameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="putLabResultResponse">
+    <WL5G3N0:part element="WL5G3N1:putLabResult_Reply" name="outparameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="putLabResultWebService">
+    <WL5G3N0:operation name="putLabResult" parameterOrder="inparameters">
+      <WL5G3N0:input message="WL5G3N1:putLabResult"/>
+      <WL5G3N0:output message="WL5G3N1:putLabResultResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="putLabResultServiceSoapBinding" type="WL5G3N1:putLabResultWebService">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="putLabResult">
+      <WL5G3N2:operation style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="inparameters" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="outparameters" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="putLabResultServiceSoapBindingQSService">
+    <WL5G3N0:port binding="WL5G3N1:putLabResultServiceSoapBinding" name="putLabResultServiceSoapBindingQSPort">
+      <WL5G3N2:address location="https://localhost:8383/labResultService"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

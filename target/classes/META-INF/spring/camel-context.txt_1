@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration" 
+              xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+      http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+      
+      ">
+
+    <cxf:cxfEndpoint id="labService"
+                     address="http://0.0.0.0:8383/labResultService"
+                     serviceClass="com.mohh.nehr.PutLabResultWebService"
+						/>
+<cxf:cxfEndpoint id="soapMessageEndpoint"
+                 serviceClass="com.demo.ihis.ws.BackEndWebService"
+                 address="https://localhost:8443/cxf/test"/>   
+
+<http:conduit name="*.http-conduit">
+    <http:tlsClientParameters disableCNCheck="true">
+      <sec:keyManagers keyPassword="password">
+          <sec:keyStore password="password" type="JKS"
+          resource="certs/client.ts" />
+      </sec:keyManagers>
+      
+      <sec:trustManagers>
+          <sec:keyStore password="password" type="JKS"
+          resource="certs/client.ts" />
+      </sec:trustManagers>
+      <sec:cipherSuitesFilter>
+        <sec:include>.*_WITH_3DES_.*</sec:include>
+        <sec:include>.*_WITH_DES_.*</sec:include>
+        <sec:exclude>.*_WITH_NULL_.*</sec:exclude>
+        <sec:exclude>.*_DH_anon_.*</sec:exclude>
+      </sec:cipherSuitesFilter>
+    </http:tlsClientParameters>
+   </http:conduit>              
+ 
+ 
+<bean id="testBean" class="com.demo.ihis.ws.ProcessBean"/>   						
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+  <dataFormats>
+    <json id="labResult" library="Jackson" unmarshalTypeName="com.mohh.nehr.LabResult"/>
+  </dataFormats>    
+    <route>
+      <from uri="cxf:bean:labService" />
+      <to uri="bean:testBean?method=convertToString"/>
+      <log message="1**********************${body}"/> 
+      <to uri="cxf:bean:soapMessageEndpoint" />
+           <log message="2**********************${body}"/> 
+      <to uri="bean:testBean?method=dummyReply"/> 
+      <log message="3**********************${body}"/> 
+    </route>
+     </camelContext>
+    
+
+</beans>

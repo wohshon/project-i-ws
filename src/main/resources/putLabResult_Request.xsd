@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.mohh.com/nehr" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nehr="http://www.mohh.com/nehr" xmlns="http://www.mohh.com/nehr">
+	<xs:include schemaLocation="typeDef.xsd"/>
+	<xs:element name="putLabResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="controlHeader" type="controlHeaderType" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="patient" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="labResult" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="labResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="labInstitution" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="labFacilityUnit" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="accessionNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="eventID" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="order" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="investigationType" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="order">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="orderDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="orderNo" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="orderInstitution" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="reasonForInvestigation" type="codedValueType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="orderedBy" type="clinicianType" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="investigationType">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:choice minOccurs="1" maxOccurs="1">
+					<xs:element ref="investigationSubType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="investigation" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="investigationSubType">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="investigation" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="investigation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="specimenCollectedDate" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="specimenReceivedDate" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="comments" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="examinationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="textValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="reportDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="reportedBy" type="clinicianType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="abnormalFlag" type="codedValueType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="name" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="resultStatus" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="investigationItem" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="investigationItem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="itemName" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="itemNumericValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="itemNumericValueUOM" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="itemTextValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="resultStatus" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="abnormalFlag" type="codedValueType" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="referenceRange" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="interpretationNotes" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="POCTIndicator" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

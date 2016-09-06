@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.mohh.com/nehr" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nehr="http://www.mohh.com/nehr" xmlns="http://www.mohh.com/nehr">
+	<xs:include schemaLocation="typeDef.xsd"/>
+	<xs:element name="putLabResult_Reply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="controlHeader" type="controlHeaderType" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="resultStatus" type="resultStatusType" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

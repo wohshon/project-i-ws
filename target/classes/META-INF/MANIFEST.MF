@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1473188262094
+Build-Jdk: 1.8.0_92
+Built-By: virtuser
+Bundle-ManifestVersion: 2
+Bundle-Name: IHIS WS
+Bundle-SymbolicName: com.demo.ihis-ws
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.demo.ihis.ws;uses:="org.apache.cxf.message,org.apach
+ e.camel,com.mohh.nehr";version="1.0.0.SNAPSHOT",com.mohh.nehr;uses:="ja
+ vax.xml.bind.annotation,javax.xml.datatype,javax.xml.namespace,javax.xm
+ l.ws,javax.jws.soap,javax.jws";version="1.0.0.SNAPSHOT"
+Import-Package: com.mohh.nehr;version="[1.0,2)",javax.jws,javax.jws.soap
+ ,javax.xml.bind.annotation,javax.xml.datatype,javax.xml.namespace,javax
+ .xml.ws,org.apache.camel;version="[2.15,3)",org.apache.cxf.message;vers
+ ion="[3.0,4)"
+Tool: Bnd-1.50.0

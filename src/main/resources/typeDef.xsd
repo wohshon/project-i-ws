@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.mohh.com/nehr" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nehr="http://www.mohh.com/nehr" xmlns="http://www.mohh.com/nehr">
+	<xs:complexType name="codedValueType">
+		<xs:sequence>
+			<xs:element name="code" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="codingSchemeName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="codingSchemeVersion" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="textDescription" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="clinicianType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="controlHeaderType">
+		<xs:sequence>
+			<xs:element name="srcInstitution" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="srcApplication" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="msgID" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="msgSequenceID" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:long">
+						<xs:totalDigits value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="msgDateTime" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resultStatusType">
+		<xs:sequence>
+			<xs:element name="statusCode" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="[0-9][0-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="statusDescription" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:element name="patient">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="identification" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="name" type="nameType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="aliasName" type="nameType" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="contactDetails" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="dateOfBirth" type="xs:date" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="countryOfBirth" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="gender" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="emailAddress" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="nationality" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="race" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="residencyStatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="language" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="maritalStatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="occupation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="VIPFlag" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="VVIPFlag" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="dateOfDeath" type="xs:date" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="deathIndicator" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">						
+							<xs:enumeration value="Y"/>
+							<xs:enumeration value="N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="religion" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="nextOfKin" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="identification">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="MRNNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contactDetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="address" type="addressType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="phone" type="phoneType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nextOfKin">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="phone" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="relationship" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="nameType">
+		<xs:sequence>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="addressType">
+		<xs:sequence>
+			<xs:element name="type" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">						
+						<xs:enumeration value="MAIN"/>
+						<xs:enumeration value="OTHER"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetLine1" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="streetLine2" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="streetLine3" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="streetLine4" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="city" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="country" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="postalCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="phoneType">
+		<xs:sequence>
+			<xs:element name="type" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">						
+						<xs:enumeration value="MOBILE"/>
+						<xs:enumeration value="HOME"/>
+						<xs:enumeration value="WORK"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="countryCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="areaCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="phoneNumber" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="extensionNumber" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
