@@ -47,7 +47,9 @@
 <bean id="testBean" class="com.demo.ihis.ws.ProcessBean"/>   						
   <camelContext xmlns="http://camel.apache.org/schema/spring">
   <dataFormats>
-    <json id="labResult" library="Jackson" unmarshalTypeName="com.mohh.nehr.LabResult"/>
+<!--     <json id="labResult" library="Jackson" unmarshalTypeName="com.mohh.nehr"/>
+ -->    
+ 	<jaxb id="myJaxb" prettyPrint="true" contextPath="com.mohh.nehr"/>
   </dataFormats>    
     <route>
       <from uri="cxf:bean:labService" />
@@ -55,6 +57,22 @@
       <log message="************************************************INCOMING*******************************************************"/>
       
     <to uri="log:myLog?showAll=true&amp;multiline=true"/>
+     <to uri="bean:testBean?method=extract"/>
+    <marshal ref="myJaxb"/> 
+    <log message="************After marshelling*************"/>
+    <log message="${body}"/> 
+    <log message="***********CALLING WS**************"/>
+<removeHeaders pattern="org.apache.cxf.request*"/>
+    <removeHeaders pattern="operationName"/>
+      <to uri="bean:testBean?method=processPayload"/>
+      <log message="****************${body}***************"/>
+      <to uri="cxf:bean:soapMessageEndpoint" />
+      
+      <log message="************************************************AFTER CALLING WS *******************************************************"/>
+    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
+      <to uri="bean:testBean?method=dummyReply"/> 
+          
+      <!-- 
       <to uri="bean:testBean?method=convertToString"/>
       <log message="************************************************AFTER CONVERT TO STRING*******************************************************"/>
     <to uri="log:myLog?showAll=true&amp;multiline=true"/>
@@ -69,7 +87,7 @@
       <log message="************************************************AFTER CALLING DUMMY REPLY*******************************************************"/>
       
     <to uri="log:myLog?showAll=true&amp;multiline=true"/>
-
+ -->
     </route>
      </camelContext>
     

@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import org.apache.camel.Exchange;
 import org.apache.cxf.message.MessageContentsList;
+import org.w3c.dom.Document;
 
 import com.mohh.nehr.ControlHeaderType;
 import com.mohh.nehr.PutLabResult;
@@ -49,17 +50,22 @@ public class ProcessBean {
 	public void extract(Exchange exchange) {
 		MessageContentsList list=(MessageContentsList)exchange.getIn().getBody();
 		PutLabResult labResult=(PutLabResult)list.get(0);
-		//Message msg=exchange.getIn();
-		
-		exchange.getIn().getBody(MessageContentsList.class);
+		exchange.setProperty("REQUEST_OBJ",labResult);
+		exchange.getIn().setBody(labResult);
 	}
+	public void processPayload(Exchange exchange) {
+		//String[] payload={exchange.getIn().getBody().toString()};
+		//exchange.getOut().setBody(payload);
+		exchange.getOut().setBody(exchange.getIn().getBody(String.class));
+	}
+
 	public void convertToString(Exchange exchange) {
 		MessageContentsList list=(MessageContentsList)exchange.getIn().getBody();
 		PutLabResult result=(PutLabResult)list.get(0);
 		exchange.setProperty("REQUEST_OBJ",result);
 		//keep original body in header
 		System.out.println("***-"+exchange.getIn().getBody().toString()+"-******");
-		System.out.println("***-"+exchange.getIn().getBody(String.class)+"-******");
+		System.out.println("***-"+exchange.getIn().getBody(Document.class)+"-******");
 		exchange.getOut().setBody(exchange.getIn().getBody().toString());
 	}
 }
