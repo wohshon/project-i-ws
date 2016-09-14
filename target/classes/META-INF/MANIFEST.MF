@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1473845830079
+Bnd-LastModified: 1473873271818
 Build-Jdk: 1.8.0_92
 Built-By: virtuser
 Bundle-ManifestVersion: 2
@@ -11,8 +11,9 @@ Export-Package: com.demo.ihis.ws;uses:="org.apache.cxf.message,org.apach
  e.camel,org.w3c.dom,com.mohh.nehr";version="1.0.0.SNAPSHOT",com.mohh.ne
  hr;uses:="javax.xml.bind.annotation,javax.xml.datatype,javax.xml.namesp
  ace,javax.xml.ws,javax.jws.soap,javax.jws";version="1.0.0.SNAPSHOT"
-Import-Package: com.mohh.nehr,javax.jws,javax.jws.soap,javax.xml.bind.an
- notation,javax.xml.datatype,javax.xml.namespace,javax.xml.ws,org.apache
- .camel;version="[2.15,3)",org.apache.cxf.message;version="[3.0,4)",org.
- mariadb.jdbc,org.springframework.jdbc.datasource,org.w3c.dom
+Import-Package: com.mohh.nehr;version="[1.0,2)",javax.jws,javax.jws.soap
+ ,javax.xml.bind.annotation,javax.xml.datatype,javax.xml.namespace,javax
+ .xml.ws,org.apache.camel;version="[2.15,3)",org.apache.cxf.message;vers
+ ion="[3.0,4)",org.mariadb.jdbc,org.springframework.jdbc.datasource,org.
+ w3c.dom
 Tool: Bnd-1.50.0

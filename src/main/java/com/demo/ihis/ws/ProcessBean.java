@@ -56,7 +56,10 @@ public class ProcessBean {
 	public void processPayload(Exchange exchange) {
 		//String[] payload={exchange.getIn().getBody().toString()};
 		//exchange.getOut().setBody(payload);
-		exchange.getOut().setBody(exchange.getIn().getBody(String.class));
+		String s=exchange.getIn().getBody(String.class);
+		String[] ss={s};
+		exchange.getOut().setBody(ss);
+
 	}
 
 	public void convertToString(Exchange exchange) {
