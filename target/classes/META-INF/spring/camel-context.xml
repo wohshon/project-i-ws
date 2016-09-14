@@ -22,7 +22,14 @@
 <cxf:cxfEndpoint id="soapMessageEndpoint"
                  serviceClass="com.demo.ihis.ws.BackEndWebService"
                  address="https://localhost:8443/cxf/test"/>   
-
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.mariadb.jdbc.Driver" />
+        <property name="url" value="jdbc:mariadb://localhost:3306/demodb" />
+        <property name="username" value="demouser" />
+        <property name="password" value="password" />
+    </bean>
+    
 <http:conduit name="*.http-conduit">
     <http:tlsClientParameters disableCNCheck="true">
       <sec:keyManagers keyPassword="password">
@@ -66,30 +73,30 @@
     <removeHeaders pattern="operationName"/>
       <to uri="bean:testBean?method=processPayload"/>
       <log message="****************${body}***************"/>
+      <wireTap uri="direct:tap"/>    
+      
       <to uri="cxf:bean:soapMessageEndpoint" />
       
       <log message="************************************************AFTER CALLING WS *******************************************************"/>
     <to uri="log:myLog?showAll=true&amp;multiline=true"/>
       <to uri="bean:testBean?method=dummyReply"/> 
           
-      <!-- 
-      <to uri="bean:testBean?method=convertToString"/>
-      <log message="************************************************AFTER CONVERT TO STRING*******************************************************"/>
-    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
-    <removeHeaders pattern="org.apache.cxf.request*"/>
-    <removeHeaders pattern="operationName"/>
-      <log message="****************${body}***************"/>
-      <to uri="cxf:bean:soapMessageEndpoint" />
-      
-      <log message="************************************************AFTER CALLING WS *******************************************************"/>
-    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
-      <to uri="bean:testBean?method=dummyReply"/> 
-      <log message="************************************************AFTER CALLING DUMMY REPLY*******************************************************"/>
-      
-    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
- -->
     </route>
-     </camelContext>
+  <route>
+    <from uri="direct:tap"/>
+    <log message="saving to db"/>
+    <setHeader headerName="payload">
+      <simple>${body}</simple>
+    </setHeader>
+    <setBody>
+      <constant>
+                      insert into audit (payload) values (:?payload);
+                    </constant>
+    </setBody>
+    <to uri="jdbc:dataSource?useHeadersAsParameters=true"/>
+  </route>  
+    
+ </camelContext>
     
 
 </beans>
